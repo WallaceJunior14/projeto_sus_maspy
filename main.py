@@ -8,7 +8,7 @@ def inicializar_sistema():
     print("[SISTEMA] Iniciando a configuração do ambiente Maspy...")
     
     # Ativa os logs internos para vermos as execuções (útil para o vídeo da entrega)
-    #Admin().set_logging(show_exec=True)
+    #Admin().start_logger(enable_console=True)
     
     # 1. Instanciando os agentes
     secretaria = AgenteSecretariaSaude("Secretaria_Estadual", 500)
