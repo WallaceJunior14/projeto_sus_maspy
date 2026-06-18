@@ -2,6 +2,7 @@
 from maspy import *
 from agentes.secretaria_saude import AgenteSecretariaSaude
 from agentes.ubs import AgenteUBS
+from agentes.frota_logistica import AgenteFrotaLogistica
 
 def inicializar_sistema():
     print("[SISTEMA] Iniciando a configuração do ambiente Maspy...")
@@ -18,12 +19,17 @@ def inicializar_sistema():
     
     # UBS Zona Sul: População pequena, casos moderados, estoque baixo (Média/Alta urgência)
     ubs3 = AgenteUBS("UBS_ZonaSul", populacao=5000, casos_24h=60, estoque_local=2)
+
+    # . Instanciando a Frota Logística 
+    # Parametros: nome, x_inicial, y_inicial, custo_por_km [cite: 11]
+    veiculo1 = AgenteFrotaLogistica("Fiorino01", x_inicial=0, y_inicial=0, custo_km=2.50) 
+    veiculo2 = AgenteFrotaLogistica("Caminhao02", x_inicial=40, y_inicial=50, custo_km=4.20) 
     
     # 3. Criando o canal de comunicação do SUS
     canal_sus = Channel("Canal_SUS")
     
     # 4. Conectando todos os agentes ativos ao canal
-    Admin().connect_to([secretaria, ubs1, ubs2, ubs3], canal_sus)
+    Admin().connect_to([secretaria, ubs1, ubs2, ubs3, veiculo1, veiculo2], canal_sus)
     
     # 5. Gatilho Inicial: Ativa o objetivo na secretaria para disparar o Contract-Net
     secretaria.add(Goal("iniciar_distribuicao", (500,)))
